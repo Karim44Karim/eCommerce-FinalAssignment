@@ -38,9 +38,27 @@ export default function Register() {
       toast.success("Account Registered Successfully!", {position: "top-center", duration: 3000});
       router.push('/login');
     }
-    } catch (error) {
-      toast.error(error.response.data.message, {position: "top-center", duration: 3000});
+    if (res.data.message != 'success') {
+      throw new Error("Something went wrong!")
     }
+    } catch (error) {
+  if (axios.isAxiosError(error)) {
+    toast.error(error.response?.data?.message || "Something went wrong!", {
+      position: "top-center",
+      duration: 3000,
+    });
+  } else if (error instanceof Error) {
+    toast.error(error.message, {
+      position: "top-center",
+      duration: 3000,
+    });
+  } else {
+    toast.error("An unexpected error occurred!", {
+      position: "top-center",
+      duration: 3000,
+    });
+  }
+}
 
 
     
