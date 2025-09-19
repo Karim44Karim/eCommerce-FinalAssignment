@@ -32,7 +32,7 @@ export default function CartContextProvider({children} : CartContextProviderProp
                 
             }
         } catch (error) {
-            console.log("not logged in");
+            // console.log("not logged in");
         }
         
     }
