@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input';
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import {zodResolver} from "@hookform/resolvers/zod";
 import { toast } from "sonner"
@@ -12,56 +12,58 @@ import Link from 'next/link';
 import { signInResponseType } from '@/types/signInRes.type';
 import {checkoutSchemaType, checkoutSchema} from '@/app/schema/checkout.schema'
 import onlinePayment from '@/checkoutActions/onlineCheckoutAction';
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import cashPayment from '@/checkoutActions/cashCheckoutAction';
+import { cartContext } from '@/context/CartContext';
 
 export default function Checkout() {
 
   const {id} : {id: string} = useParams();
   
   
-  // const router = useRouter();
+  const router = useRouter();
+  const {numberOfCartItems, setNumberOfCartItems} = useContext(cartContext)!;
 
   const form = useForm<checkoutSchemaType>({
     defaultValues: {
       details: "",
       phone: "",
       city: "",
+      payment: "cash",
     },
     resolver: zodResolver(checkoutSchema),
   });
 
   async function handleCheckout(values: checkoutSchemaType) {
+  try {
     console.log(values);
 
-    const res = await onlinePayment(id ,"",values);
+    if (values.payment === "card") {
+      const res = await onlinePayment(id, "", values);
 
-    if(res.status === "success"){
-      console.log(res.session.url);
-      window.location.href = res.session.url;
+      if (res.status === "success") {
+        window.location.href = res.session.url;
+      } else {
+        toast.error(res.message || "Card payment failed. Please try again.", {position:"top-center"});
+      }
+    } else {
+      const res = await cashPayment(id, values);
 
-      
+      if (res.status === "success") {
+        toast.success("Order placed successfully!", {position:"top-center"});
+        router.push("/");
+        setNumberOfCartItems(0);
+
+      } else {
+        toast.error(res.message || "Cash payment failed. Please try again.", {position:"top-center"});
+      }
     }
-    
-    //   try {
-    //   const res: signInResponseType | undefined = await signIn("credentials", {        
-    //   redirect: false,
-    //   email: values.email,
-    //   password: values.password,
-    // });
-    // console.log(res);
-    
-    // if(res?.ok){
-    //   console.log(res);
-    //   toast.success("Logged In Successfully!", {position: "top-center", duration: 3000});
-    //   router.push('/');
-    // } else{
-    //   throw new Error(res?.error?? "Login Failed");
-    // }
-
-    // } catch (error) {
-    //   console.log(error);
-    //   toast.error("An unexpected error occurred", {position: "top-center", duration: 3000});
-    // }
+  } catch (error) {
+    console.error(error);
+    toast.error("Something went wrong. Please try again later.", {position:"top-center"});
   }
+}
   return (
     <>
       <div className="w-1/2 mx-auto my-12">
@@ -107,16 +109,31 @@ export default function Checkout() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="payment"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <RadioGroup defaultValue="cash" className="mt-4" {...field} onValueChange={field.onChange}>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="card" id="card" />
+                        <Label htmlFor="card">Bank</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="cash" id="cash" />
+                        <Label htmlFor="cash">Cash on delivery</Label>
+                      </div>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button className="mt-4 cursor-pointer w-full">Pay Now</Button>
           </form>
         </Form>
         <div>
-          <Link
-            href="/forgotPassword"
-            className="text-[color:#DB4444] text-sm hover:underline hover:underline-offset-1  hover:cursor-pointer"
-          >
-            Forgot Password?
-          </Link>
         </div>
       </div>
     </>

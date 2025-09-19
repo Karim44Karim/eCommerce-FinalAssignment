@@ -154,3 +154,46 @@
     transform: rotate(360deg);
   }
 } 
+
+
+.categories-slider .swiper-pagination{
+  @apply static;
+}
+
+.swiper.categories-slider{
+  padding-top: 50px;
+  overflow-y: visible !important;
+
+}
+
+.swiper-button-prev{
+  top: 0 !important;
+  left: 100% !important;
+  transform: translate(-240%, 50%) !important;
+  background-color: gainsboro;
+  background-image: url("../../public/arrow-left-solid-full.svg");
+  background-color: #F5F5F5 !important;
+  background-position: center;
+  background-size: 24px;
+  background-repeat: no-repeat;
+  border-radius: 100% !important;
+  width: 46px !important;
+  height: 46px !important;
+}
+.swiper-button-next{
+  top: 0 !important;
+  transform: translateY(50%);
+  background-image: url("../../public/arrow-right-solid-full.svg");
+  background-color: #F5F5F5 !important;
+  background-position: center;
+  background-size: 24px;
+  background-repeat: no-repeat;
+  border-radius: 100% !important;
+  width: 46px !important;
+  height: 46px !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  content: "" !important;
+}

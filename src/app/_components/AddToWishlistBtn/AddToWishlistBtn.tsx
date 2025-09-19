@@ -60,7 +60,7 @@ export default function AddToWishlistBtn({id} : {id: string}) {
     <>
       <div
         onClick={() => checkAddProductToWishlist(id)}
-        className="bg-white rounded-full w-[34px] h-[34-px] absolute top-3 right-0 hover:cursor-pointer"
+        className="flex items-center justify-center size-8 bg-white rounded-full  hover:cursor-pointer hover:text-red-400"
       >
         <i className={`fa-regular fa-heart ${isInWishlist? 'fa-solid text-red-400':''}`} ></i>
       </div>

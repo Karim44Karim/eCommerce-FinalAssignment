@@ -26,5 +26,5 @@ export default function AddBtn({id} : {id: string}) {
         
     }
 
-  return <Button onClick={()=> checkAddProduct(id)} className="cursor-pointer w-full">Add to cart</Button>;
+  return <Button onClick={()=> checkAddProduct(id)} className="cursor-pointer w-full rounded-none">Add to cart</Button>;
 }

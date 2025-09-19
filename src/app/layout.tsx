@@ -7,6 +7,8 @@ import { Toaster } from "@/components/ui/sonner";
 import MySessionProvider from "@/MySessoinProvider/MySessionProvider";
 import CartContextProvider from "@/context/CartContext";
 import WishlistContextProvider from "@/context/WishlistContext";
+import { Navbar5 } from "./_components/Navbar5/Navbar5";
+import Footer from "./_components/Footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,8 +38,12 @@ export default function RootLayout({
         <MySessionProvider>
           <WishlistContextProvider>
             <CartContextProvider>
-              <Navbar />
-              {children}
+              <div className="flex flex-col min-h-screen">
+                {/* <Navbar /> */}
+                <Navbar5 />
+                <div className="flex-grow my-24">{children}</div>
+                <Footer />
+              </div>
               <Toaster />
             </CartContextProvider>
           </WishlistContextProvider>

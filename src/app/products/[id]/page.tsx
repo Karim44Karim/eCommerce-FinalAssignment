@@ -26,7 +26,7 @@ export default async function ProductDetails({
       <div className="container w-[80%] mx-auto my-12">
         <div className="flex flex-wrap">
           {relatedProducts.data.map((product: ProductType) => (
-            <SingleProduct product={product} key={product.id} />
+            <SingleProduct product={product} key={product.id} variant=''/>
           ))}
         </div>
       </div>

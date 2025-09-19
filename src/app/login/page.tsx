@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input';
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import {zodResolver} from "@hookform/resolvers/zod";
 import { toast } from "sonner"
@@ -11,11 +11,19 @@ import { loginSchema, loginSchemaType } from '../schema/login.schema';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { signInResponseType } from '@/types/signInRes.type';
+import getLoggedUserCart from '@/CartActions/getUserCart';
+import getLoggedUserWishlist from '@/WishlistActions/getUserWishlist';
+import { wishlistContext } from '@/context/WishlistContext';
+import { cartContext } from '@/context/CartContext';
 
 export default function Login() {
   
   const router = useRouter();
 
+  const { numberOfCartItems, setNumberOfCartItems } = useContext(cartContext)!;
+  const { numberOfWishlistItems, getUserWishlist } = useContext(wishlistContext)!;
+
+    
   const form = useForm<loginSchemaType>({
     defaultValues: {
       email: "",
@@ -27,6 +35,24 @@ export default function Login() {
   async function handleLogin(values: loginSchemaType) {
     console.log(values);
 
+        async function getUserCart() {
+            try {
+                const res = await getLoggedUserCart();
+                console.log(res);
+                if(res.status === 'success'){
+                    console.log(res.data.products);
+                    let sum =0;
+                    res.data.products.forEach((element: { count: number }) => {
+                        sum += element.count;
+                    });
+                    setNumberOfCartItems(sum);
+                    
+                }
+            } catch (error) {
+                console.log("not logged in");
+            }
+            
+        }
   //     const res = await signIn("credentials", {
   //     redirect: false,
   //     email: values.email,
@@ -51,7 +77,10 @@ export default function Login() {
     if(res?.ok){
       console.log(res);
       toast.success("Logged In Successfully!", {position: "top-center", duration: 3000});
+      getUserCart();
+      getUserWishlist();
       router.push('/');
+
     } else{
       throw new Error(res?.error?? "Login Failed");
     }
