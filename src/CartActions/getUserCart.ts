@@ -4,7 +4,8 @@ import getMyToken from "@/utilities/getMyToken"
 export default async function getLoggedUserCart() {
 
     const token = await getMyToken();
-
+    console.log("Token successssss", token);
+    
     if (!token){
         // throw new Error("Please Login First!");
           return { message: "Please Login First!", statusCode: 401 };
@@ -16,6 +17,9 @@ export default async function getLoggedUserCart() {
             "Content-Type": "application/json",
         },
     })
+
+    console.log("Cart successssss", res);
+
 
     const payload = await res.json();
     return payload;

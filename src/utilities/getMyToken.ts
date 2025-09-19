@@ -8,9 +8,12 @@ try {
       (await cookies()).get("next-auth.session-token")?.value ||
       (await cookies()).get("__secure-next-auth.session-token")?.value;
 
+      console.log("hello from encoded token", encodedToken);
+      
       if(!encodedToken) return null;
 
     const token = await decode({token: encodedToken, secret: process.env.NEXTAUTH_SECRET!});
+      console.log("hello from tokennnnnnnnnnn", token);
   
     
     return token?.token || null;
