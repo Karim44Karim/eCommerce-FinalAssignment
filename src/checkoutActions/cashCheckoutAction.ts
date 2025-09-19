@@ -7,7 +7,8 @@ export default async function cashPayment(cartId: string, formValues: checkoutSc
 
     const token = await getMyToken();
 
-    if(!token) throw new Error ('Please Login First!');
+    // if(!token) throw new Error ('Please Login First!');
+    if (!token) return { message: "Please Login First!", statusCode: 401 };
 
     const res = await fetch(
       `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,
