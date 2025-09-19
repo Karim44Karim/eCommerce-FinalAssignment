@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input';
@@ -10,9 +10,12 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import * as z from "zod";
 import verifyResetCode from '@/app/ResetPasswordActions/verifyResetCode';
+import AppButton from '@/app/_components/AppBtn/AppBtn';
 
 export default function VerifyCode() {
     const router = useRouter();
+          const [isLoading, setIsLoading] = useState(false);
+
 
     const resetCodeSchema = z.object({
     resetCode: z
@@ -32,16 +35,22 @@ export default function VerifyCode() {
     console.log(values.resetCode);
 
     try {
+            setIsLoading(true);
+
     const res = await verifyResetCode(values.resetCode);
     
     if(res?.status === "Success"){
       console.log("testing",res);
+              setIsLoading(false);
+
       toast.success("Code Verification Successful!", {position: "top-center", duration: 3000});
       router.push('/forgotPassword/resetPassword');
     } else{
       throw new Error(res?.message);
     }
     } catch (error) {
+              setIsLoading(false);
+
       console.log(error);
       toast.error("An unexpected error occurred", {position: "top-center", duration: 3000});
     }
@@ -68,9 +77,9 @@ export default function VerifyCode() {
                 </FormItem>
               )}
             />
-            <Button className="mt-4 cursor-pointer w-full">
+            <AppButton isLoading={isLoading} className="mt-4 cursor-pointer w-full">
               Verify Code
-            </Button>
+            </AppButton>
           </form>
         </Form>
         <div>

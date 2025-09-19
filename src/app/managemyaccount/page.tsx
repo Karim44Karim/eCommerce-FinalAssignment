@@ -9,37 +9,40 @@ import axios from 'axios';
 import { toast } from "sonner"
 import { useRouter } from 'next/navigation';
 import { resetPasswordSchema, resetPasswordSchemaType } from '@/app/schema/reset.Passwordshcema';
-import AppButton from '@/app/_components/AppBtn/AppBtn';
+import { changePasswordSchema, changePasswordSchemaType } from '../schema/change.Passwordshcema';
+import getMyToken from '@/utilities/getMyToken';
+import AppButton from '../_components/AppBtn/AppBtn';
 
-export default function ResetPassword() {
+export default function ManageAccount() {
   
   const router = useRouter();
-        const [isLoading, setIsLoading] = useState(false);
+      const [isLoading, setIsLoading] = useState(false);
 
-
-  const form = useForm<resetPasswordSchemaType>({
+  const form = useForm<changePasswordSchemaType>({
     defaultValues: {
-      email: "",
-      newPassword: "",
+      currentPassword: "",
+      password: "",
       rePassword: "",
     },
-    resolver: zodResolver(resetPasswordSchema),
+    resolver: zodResolver(changePasswordSchema),
   });
 
-  async function handleResetPassword(values: resetPasswordSchemaType) {
+  async function handleResetPassword(values: changePasswordSchemaType) {
     console.log(values);
+          setIsLoading(true);
 
+    const token = await getMyToken();
     try {
-            setIsLoading(true);
-
           const res = await axios.put(
-      "https://ecommerce.routemisr.com/api/v1/auth/resetPassword",
-      values
-    );
+            "https://ecommerce.routemisr.com/api/v1/users/changeMyPassword", values,
+            {
+              headers: { token, "Content-Type": "application/json" },
+            }
+          );
     
     if(res.statusText === 'OK'){
       console.log(res);
-      toast.success("Password Reset Successfully!", {position: "top-center", duration: 3000});
+      toast.success("Password Changed Successfully!", {position: "top-center", duration: 3000});
               setIsLoading(false);
 
       router.push('/login');
@@ -74,17 +77,18 @@ export default function ResetPassword() {
   return (
     <>
       <div className="w-1/2 mx-auto my-12">
-      <h1 className='text-3xl text-center font-bold my-4'>Reset Password</h1>
+      <h2 className='text-3xl font-bold my-4'>Manage Account</h2>
+      <h3 className='text-2xl font-bold my-4'>Change Password</h3>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleResetPassword)}>
             <FormField
               control={form.control}
-              name="email"
+              name="currentPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email:</FormLabel>
+                  <FormLabel>Current Password:</FormLabel>
                   <FormControl>
-                    <Input type="email" {...field} />
+                    <Input type="password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -92,7 +96,7 @@ export default function ResetPassword() {
             />
             <FormField
               control={form.control}
-              name="newPassword"
+              name="password"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>New Password:</FormLabel>
@@ -116,7 +120,7 @@ export default function ResetPassword() {
                 </FormItem>
               )}
             />
-            <AppButton isLoading={isLoading} className='mt-4 cursor-pointer w-full'>Reset Password</AppButton>
+            <AppButton isLoading={isLoading} className='mt-4 cursor-pointer w-full'>Change Password</AppButton>
           </form>
         </Form>
       </div>

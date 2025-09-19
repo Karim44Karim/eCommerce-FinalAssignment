@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input';
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {zodResolver} from "@hookform/resolvers/zod";
 import { toast } from "sonner"
@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import cashPayment from '@/checkoutActions/cashCheckoutAction';
 import { cartContext } from '@/context/CartContext';
+import AppButton from '@/app/_components/AppBtn/AppBtn';
 
 export default function Checkout() {
 
@@ -23,6 +24,8 @@ export default function Checkout() {
   
   
   const router = useRouter();
+        const [isLoading, setIsLoading] = useState(false);
+
   const {numberOfCartItems, setNumberOfCartItems} = useContext(cartContext)!;
 
   const form = useForm<checkoutSchemaType>({
@@ -38,28 +41,42 @@ export default function Checkout() {
   async function handleCheckout(values: checkoutSchemaType) {
   try {
     console.log(values);
+          setIsLoading(true);
+
 
     if (values.payment === "card") {
       const res = await onlinePayment(id, "", values);
 
       if (res.status === "success") {
+                setIsLoading(false);
+
         window.location.href = res.session.url;
       } else {
+                setIsLoading(false);
+
         toast.error(res.message || "Card payment failed. Please try again.", {position:"top-center"});
       }
     } else {
+              setIsLoading(false);
+
       const res = await cashPayment(id, values);
 
       if (res.status === "success") {
+                setIsLoading(false);
+
         toast.success("Order placed successfully!", {position:"top-center"});
         router.push("/");
         setNumberOfCartItems(0);
 
       } else {
+                setIsLoading(false);
+
         toast.error(res.message || "Cash payment failed. Please try again.", {position:"top-center"});
       }
     }
   } catch (error) {
+            setIsLoading(false);
+
     console.error(error);
     toast.error("Something went wrong. Please try again later.", {position:"top-center"});
   }
@@ -130,7 +147,7 @@ export default function Checkout() {
                 </FormItem>
               )}
             />
-            <Button className="mt-4 cursor-pointer w-full">Pay Now</Button>
+            <AppButton isLoading={isLoading} className="mt-4 cursor-pointer w-full">Pay Now</AppButton>
           </form>
         </Form>
         <div>

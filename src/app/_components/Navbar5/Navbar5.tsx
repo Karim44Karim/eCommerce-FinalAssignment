@@ -165,6 +165,16 @@ const Navbar5 = () => {
                     brands
                   </NavigationMenuLink>
                 </NavigationMenuItem>
+                {session && (
+                  <NavigationMenuItem>
+                    <NavigationMenuLink
+                      href="/allorders"
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      My Orders
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                )}
                 {!session && (
                   <NavigationMenuItem>
                     <NavigationMenuLink
@@ -245,8 +255,10 @@ const Navbar5 = () => {
                         <DropdownMenuContent className="w-45" align="end">
                           <DropdownMenuGroup>
                             <DropdownMenuItem>
-                              <i className="fa-regular fa-user"></i>
-                              Manage My Account
+                              <Link href="managemyaccount">
+                                <i className="fa-regular fa-user"></i>
+                                Manage My Account
+                                </Link>
                             </DropdownMenuItem>
                             <Link href="/allorders">
                               <DropdownMenuItem>
@@ -315,8 +327,10 @@ const Navbar5 = () => {
                           <DropdownMenuContent className="w-45" align="end">
                             <DropdownMenuGroup>
                               <DropdownMenuItem>
-                                <i className="fa-regular fa-user"></i>
-                                Manage My Account
+                                <Link href="/managemyaccount">
+                                  <i className="fa-solid fa-user"></i>
+                                  Manage My Account
+                                </Link>
                               </DropdownMenuItem>
                               <DropdownMenuItem>
                                 <Link href="/allorders">

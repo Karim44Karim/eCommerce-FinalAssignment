@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input';
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {zodResolver} from "@hookform/resolvers/zod";
 import { toast } from "sonner"
@@ -12,9 +12,12 @@ import Link from 'next/link';
 import { signInResponseType } from '@/types/signInRes.type';
 import { forgotPasswordSchema, forgotPasswordSchemaType } from '../schema/forgotPassword.schema';
 import forgotPassword from '../ResetPasswordActions/forgotPassword.action';
+import AppButton from '../_components/AppBtn/AppBtn';
 
 export default function ForgotPassword() {
   const router = useRouter();
+        const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<forgotPasswordSchemaType>({
     defaultValues: {
     email: "",
@@ -27,17 +30,23 @@ export default function ForgotPassword() {
     console.log(email);
 
     try {
+            setIsLoading(true);
+
     const res = await forgotPassword(email);
     console.log(res);
     
     if(res?.statusMsg === "success"){
       console.log("testing",res);
+              setIsLoading(false);
+
       toast.success(res.message, {position: "top-center", duration: 3000});
       router.push('/forgotPassword/verifyCode');
     } else{
       throw new Error(res?.message);
     }
     } catch (error) {
+              setIsLoading(false);
+
       console.log(error);
       toast.error("An unexpected error occurred", {position: "top-center", duration: 3000});
     }
@@ -63,9 +72,9 @@ export default function ForgotPassword() {
                 </FormItem>
               )}
             />
-            <Button className="mt-4 cursor-pointer w-full">
+            <AppButton isLoading={isLoading} className="mt-4 cursor-pointer w-full">
               Send Password Reset Code
-            </Button>
+            </AppButton>
           </form>
         </Form>
         <div>
