@@ -14,13 +14,11 @@ export default async function AllOrders() {
 
   const {decoded} = await verifyToken(token);
 
-  console.log(decoded);
   
     if (!decoded?.id) {
     return <div>Invalid token. Please log in again.</div>;
   }
   const orders = await getLoggedUserOrders(decoded.id);
-  console.log("hello from all orderssss",orders);
 
     if (!orders || orders.length === 0) {
     return <div>No orders found.</div>;

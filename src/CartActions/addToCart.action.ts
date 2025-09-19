@@ -21,6 +21,6 @@ try {
 
     return payload;
 } catch (error) {
-    return error;
+    return null;
 }
 }

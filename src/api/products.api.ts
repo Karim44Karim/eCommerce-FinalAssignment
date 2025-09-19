@@ -12,7 +12,6 @@ export default async function getProducts(limit?: string, sort?: string, page:nu
 
   const response = await fetch(url, { cache: "no-cache" });
   const { data, metadata } = await response.json();
-  console.log(data, metadata);
 
   return {data, metadata};
 }
