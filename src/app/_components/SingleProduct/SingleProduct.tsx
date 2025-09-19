@@ -16,7 +16,7 @@ import { wishlistContext } from '@/context/WishlistContext';
 import { projectUpdate } from 'next/dist/build/swc/generated-native';
 
 
-export default function SingleProduct({product, variant}: {product: ProductType, variant: string}) {
+export default function SingleProduct({product, variant}: {product: ProductType, variant?: string}) {
   return (
     <div className={`${variant === "slider" ? "max-w-[270px]":"w-full md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-[270px]"}`}>
       <div className="prod p-4">
