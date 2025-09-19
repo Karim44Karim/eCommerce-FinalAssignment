@@ -80,7 +80,7 @@
             <div className="flex justify-center items-center py-3 gap-2">
               <div>
                 <Image
-                  src="/QR Code.png"
+                  src="/qr-code.png"
                   width={80}
                   height={80}
                   alt="qr-code"
