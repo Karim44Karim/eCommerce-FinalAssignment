@@ -3,8 +3,6 @@ import React from 'react'
 import img1 from "../../../../public/images/slider-image-1.jpeg"
 import img2 from "../../../../public/images/slider-image-2.jpeg"
 import img3 from "../../../../public/images/slider-image-3.jpeg"
-import img4 from "../../../../public/images/grocery-banner.png"
-import img5 from "../../../../public/images/grocery-banner-2.jpeg"
 import Image from 'next/image'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';

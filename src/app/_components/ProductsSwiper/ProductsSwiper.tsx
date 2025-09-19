@@ -10,8 +10,6 @@ import 'swiper/css/pagination';
 
 import { Pagination, Navigation,  Grid } from 'swiper/modules'
 
-import { CategoryType } from '@/types/category.type';
-import Image from 'next/image';
 import { ProductType } from '@/types/product.type';
 import SingleProduct from '../SingleProduct/SingleProduct';
 

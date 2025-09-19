@@ -44,7 +44,20 @@ export default function WishlistContextProvider({children} : WishlistContextProv
       }
 
     useEffect(() => {
-      getUserWishlist();
+       (async () => {
+    try {
+      setIsLoading(true);
+      const res = await getLoggedUserWishlist();
+      if (res.status === 'success') {
+        setWishlistProducts(res.data);
+        setnumberOfWishlistItems(res.count);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  })();
     }, [])
     
     

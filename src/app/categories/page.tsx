@@ -1,8 +1,5 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import SingleProduct from '../_components/SingleProduct/SingleProduct';
-import { ProductType } from '@/types/product.type';
-import getProducts from '@/api/products.api';
 import {
   Pagination,
   PaginationContent,

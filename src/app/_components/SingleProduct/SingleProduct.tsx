@@ -12,8 +12,6 @@ import Image from 'next/image';
 import { ProductType } from '@/types/product.type';
 import AddBtn from '../AddBtn/AddBtn';
 import AddToWishlistBtn from '../AddToWishlistBtn/AddToWishlistBtn';
-import { wishlistContext } from '@/context/WishlistContext';
-import { projectUpdate } from 'next/dist/build/swc/generated-native';
 
 
 export default function SingleProduct({product, variant}: {product: ProductType, variant?: string}) {

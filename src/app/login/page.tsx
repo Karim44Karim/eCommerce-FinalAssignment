@@ -1,6 +1,5 @@
 "use client"
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input';
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -12,7 +11,6 @@ import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { signInResponseType } from '@/types/signInRes.type';
 import getLoggedUserCart from '@/CartActions/getUserCart';
-import getLoggedUserWishlist from '@/WishlistActions/getUserWishlist';
 import { wishlistContext } from '@/context/WishlistContext';
 import { cartContext } from '@/context/CartContext';
 import AppButton from '../_components/AppBtn/AppBtn';
@@ -20,8 +18,8 @@ import AppButton from '../_components/AppBtn/AppBtn';
 export default function Login() {
   const router = useRouter();
 
-  const { numberOfCartItems, setNumberOfCartItems } = useContext(cartContext)!;
-  const { numberOfWishlistItems, getUserWishlist } =
+  const { setNumberOfCartItems } = useContext(cartContext)!;
+  const {  getUserWishlist } =
     useContext(wishlistContext)!;
 
   const form = useForm<loginSchemaType>({

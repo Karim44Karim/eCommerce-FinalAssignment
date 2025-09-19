@@ -8,7 +8,7 @@ import { ProductType } from '@/types/product.type';
 import removeWishlistItem from '@/WishlistActions/removeWishlistItem.action';
 
 export default function AddToWishlistBtn({id} : {id: string}) {
-    const {numberOfWishlistItems, setnumberOfWishlistItems, wishlistProducts, getUserWishlist} = useContext(wishlistContext)!
+    const {wishlistProducts, getUserWishlist} = useContext(wishlistContext)!
     const [isInWishlist, setIsInWishlist] = useState(false);
 
     useEffect(() => {

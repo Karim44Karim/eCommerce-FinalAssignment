@@ -1,20 +1,16 @@
 "use client"
 
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import { ProductType } from '@/types/product.type';
 import SingleProduct from '../_components/SingleProduct/SingleProduct';
-import getLoggedUserWishlist from '@/WishlistActions/getUserWishlist';
 import { wishlistContext } from '@/context/WishlistContext';
-import { WishlistProductType} from '@/types/wishlist.type';
 
 
 export default function Wishlist() {
 
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [currentId, setCurrentId] = useState("");
 
-  const { numberOfWishlistItems, setnumberOfWishlistItems, wishlistProducts, isLoading } = useContext(wishlistContext)!;
+  const { wishlistProducts, isLoading } = useContext(wishlistContext)!;
 
   // const {numberOfWishlistItems, setnumberOfWishlistItems} = useContext(wishlistContext)!;
   // console.log(products);

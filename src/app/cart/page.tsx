@@ -1,14 +1,10 @@
 "use client"
-import { authOptions } from '@/auth';
 import clearCart from '@/CartActions/clearCart.action';
 import getLoggedUserCart from '@/CartActions/getUserCart';
 import removeCartItem from '@/CartActions/removeCartItem.action';
 import updateCartQuantity from '@/CartActions/updateCartQuantity.action';
 import { Button } from '@/components/ui/button';
 import { cartContext } from '@/context/CartContext';
-import getMyToken from '@/utilities/getMyToken';
-import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation';
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner';
 import { CartProductType } from '@/types/cart.type';

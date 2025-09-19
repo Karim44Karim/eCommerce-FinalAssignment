@@ -1,5 +1,4 @@
 "use client"
-import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input';
 import React, { useState } from 'react'
@@ -7,9 +6,7 @@ import { useForm } from 'react-hook-form'
 import {zodResolver} from "@hookform/resolvers/zod";
 import { toast } from "sonner"
 import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { signInResponseType } from '@/types/signInRes.type';
 import { forgotPasswordSchema, forgotPasswordSchemaType } from '../schema/forgotPassword.schema';
 import forgotPassword from '../ResetPasswordActions/forgotPassword.action';
 import AppButton from '../_components/AppBtn/AppBtn';

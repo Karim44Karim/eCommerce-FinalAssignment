@@ -1,5 +1,4 @@
 "use client"
-import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input';
 import React, { useContext, useState } from 'react'
@@ -7,9 +6,6 @@ import { useForm } from 'react-hook-form'
 import {zodResolver} from "@hookform/resolvers/zod";
 import { toast } from "sonner"
 import { useParams, useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
-import Link from 'next/link';
-import { signInResponseType } from '@/types/signInRes.type';
 import {checkoutSchemaType, checkoutSchema} from '@/app/schema/checkout.schema'
 import onlinePayment from '@/checkoutActions/onlineCheckoutAction';
 import { Label } from "@/components/ui/label"
@@ -26,7 +22,7 @@ export default function Checkout() {
   const router = useRouter();
         const [isLoading, setIsLoading] = useState(false);
 
-  const {numberOfCartItems, setNumberOfCartItems} = useContext(cartContext)!;
+  const {setNumberOfCartItems} = useContext(cartContext)!;
 
   const form = useForm<checkoutSchemaType>({
     defaultValues: {

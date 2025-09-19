@@ -1,5 +1,3 @@
-import singleProduct from '@/api/singleProduct';
-import Details from '@/app/_components/Details/Details';
 import SingleProduct from '@/app/_components/SingleProduct/SingleProduct';
 import getRelatedProducts from '@/ProductCategoryActions/relatedProducts.actions';
 import { ProductType } from '@/types/product.type';
