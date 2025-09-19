@@ -6,6 +6,11 @@ import CategroriesMenu from "./_components/CategoriesMenu/CategroriesMenu";
 import Offer from "./_components/Offer/Offer";
 import NewArrival from "./_components/NewArrival/NewArrival";
 
+export const metadata = {
+  title: "Exclusive | My Shop",
+  description: "Browse all products available in our shop",
+};
+
 export default function Home() {
   return (
     <>
