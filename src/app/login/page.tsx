@@ -82,8 +82,8 @@ export default function Login() {
           position: "top-center",
           duration: 3000,
         });
-        getUserCart();
-        getUserWishlist();
+        await getUserCart();
+        await getUserWishlist();
         setIsLoading(false);
         router.push("/");
       } else {
