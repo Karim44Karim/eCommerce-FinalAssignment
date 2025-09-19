@@ -21,9 +21,7 @@ export default function CartContextProvider({children} : CartContextProviderProp
     async function getUserCart() {
         try {
             const res = await getLoggedUserCart();
-            console.log(res);
             if(res.status === 'success'){
-                console.log(res.data.products);
                 let sum =0;
                 res.data.products.forEach((element: { count: number }) => {
                     sum += element.count;
@@ -38,7 +36,10 @@ export default function CartContextProvider({children} : CartContextProviderProp
     }
 
     useEffect(() => {
-      getUserCart();
+        const fetchCart = async () => {
+    await getUserCart();
+  };
+  fetchCart();
     }, [])
     
     
