@@ -50,7 +50,7 @@
                 <Link href="/cart">Cart</Link>
               </li>
               <li>
-                <Link href="/wishlig">Wishlist</Link>
+                <Link href="/wishlist">Wishlist</Link>
               </li>
               <li>
                 <Link href="/products">Shop</Link>
