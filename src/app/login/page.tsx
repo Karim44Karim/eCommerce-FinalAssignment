@@ -50,7 +50,8 @@ export default function Login() {
           setNumberOfCartItems(sum);
         }
       } catch (error) {
-        console.log("not logged in");
+        // console.log("not logged in");
+        return null;
       }
     }
     //     const res = await signIn("credentials", {
@@ -90,7 +91,7 @@ export default function Login() {
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+      console.log(null);
       toast.error("An unexpected error occurred", {
         position: "top-center",
         duration: 3000,
