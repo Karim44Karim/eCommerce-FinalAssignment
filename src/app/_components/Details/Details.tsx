@@ -12,11 +12,12 @@ export default function Details({data}:{data: ProductType}) {
   
   return (
     <>
-      <div className="text-center mx-auto container w-full lg:w-[80%] flex justify-between pt-16">
-        <div className="w-2/3">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl pt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <div className='w-full'>
           <DetailsSwiper images={data.images} />
         </div>
-        <div className="flex flex-col w-1/3">
+        <div className="flex flex-col">
           <h2 className="text-2xl font-semibold text-start">{data.title}</h2>
           <div className="flex flex-col items-start">
             <div className="flex py-3">
@@ -97,6 +98,7 @@ export default function Details({data}:{data: ProductType}) {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

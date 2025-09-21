@@ -3,7 +3,7 @@
 import { checkoutSchemaType } from "@/app/schema/checkout.schema";
 import getMyToken from "@/utilities/getMyToken"
 
-export default async function onlinePayment(cartId: string, url=process.env.NEXT_URL, formValues: checkoutSchemaType) {
+export default async function onlinePayment(cartId: string, formValues: checkoutSchemaType) {
 
     const token = await getMyToken();
 
@@ -11,10 +11,10 @@ export default async function onlinePayment(cartId: string, url=process.env.NEXT
     if (!token) return { message: "Please Login First!", statusCode: 401 };
 
     const res = await fetch(
-      `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${url}`,
+      `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${process.env.NEXT_URL}`,
       {
         method: "POST",
-        headers: { token, "Content-Type": "applicatoin/json" },
+        headers: { token, "Content-Type": "application/json" },
         body: JSON.stringify({ shippingAddress: formValues }),
       }
     );

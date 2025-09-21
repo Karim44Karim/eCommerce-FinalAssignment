@@ -41,7 +41,7 @@ export default function Checkout() {
 
 
     if (values.payment === "card") {
-      const res = await onlinePayment(id, "", values);
+      const res = await onlinePayment(id, values);
 
       if (res.status === "success") {
                 setIsLoading(false);

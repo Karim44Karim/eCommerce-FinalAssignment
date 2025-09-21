@@ -60,7 +60,7 @@ export default function CategoriesMenuDropDown({
   subCategories: SubCategoryType[];
 }) {
   return (
-    <div className="flex flex-col w-1/5 relative border-r my-14">
+    <div className="flex flex-col w-1/2 md:w-1/5 relative border-r my-14">
       {categories?.map((category) => (
         <CategoryItem
           key={category._id}
